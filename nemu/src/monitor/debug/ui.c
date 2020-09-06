@@ -40,6 +40,8 @@ static int cmd_help(char *args);
 
 static int cmd_si(char *args);
 
+static int cmd_info(char *args);
+
 static struct {
 	char *name;
 	char *description;
@@ -49,6 +51,7 @@ static struct {
 	{ "c", "Continue the execution of the program", cmd_c },
 	{ "q", "Exit NEMU", cmd_q },
 	{ "si","Execute single instructions" , cmd_si },
+	{ "info","Display values from registers or informations from watchpoint" , cmd_info },
 };
 #define NR_CMD (sizeof(cmd_table) / sizeof(cmd_table[0]))
 
@@ -93,7 +96,22 @@ static int cmd_si(char *args) {
 	}
 	cpu_exec(1);
 	return 1 ;
-}	
+}
+
+static int cmd_info(char *args) {
+	if(strlen(args)==1)
+	{
+		char sub ;
+		sscanf(args,"%c",&sub);
+		if ( sub == 'r')
+		{
+			printf("eax:%x\nedx:%x\necx%x\nebx%x\nebp%x\nesi%x\nedi%x\nesp%x\n",cpu.eax,cpu.edx,cpu.ecx,cpu.ebx,cpu.ebp,cpu.esi,cpu.edi,cpu.esp);
+			return 1;
+		}
+	}
+	printf("Unknown SUBCMD\n");
+	return 0 ;
+}
 
 void ui_mainloop() {
 	while(1) {
