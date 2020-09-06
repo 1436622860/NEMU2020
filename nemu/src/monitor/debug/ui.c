@@ -42,6 +42,8 @@ static int cmd_si(char *args);
 
 static int cmd_info(char *args);
 
+static int cmd_x(char *args);
+
 static struct {
 	char *name;
 	char *description;
@@ -52,6 +54,7 @@ static struct {
 	{ "q", "Exit NEMU", cmd_q },
 	{ "si","Execute single instructions" , cmd_si },
 	{ "info","Display values from registers or informations from watchpoint" , cmd_info },
+	{ "x","Print N 4-bytes from EXPR(hex)" , cmd_x },
 };
 #define NR_CMD (sizeof(cmd_table) / sizeof(cmd_table[0]))
 
@@ -110,6 +113,29 @@ static int cmd_info(char *args) {
 		}
 	}
 	printf("Unknown SUBCMD\n");
+	return 0 ;
+}
+
+static int cmd_x(char *args) {
+	if ( args != NULL )
+	{
+		char *args_end = args + strlen(args);
+		char *arg1 = strtok(args," ");
+		uint32_t n ;
+		sscanf(arg1,"%I32u",&n);
+		char *arg2 = arg1 + strlen(arg1) + 1 ;
+		if ( arg2 + strlen(arg2) == args_end ) {
+			uint32_t pos ;
+			sscanf(arg2,"%xI32u",&pos);
+			int len = 32 ;
+			while ( n-- ) {
+				printf("%x",swaddr_read(pos,len));
+				pos += len ;
+			}
+			return 1 ;
+		}		
+	}
+	printf("Wrong arguments.x N EXPR\n");
 	return 0 ;
 }
 
