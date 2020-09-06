@@ -129,7 +129,7 @@ static int cmd_x(char *args) {
 			sscanf(arg2,"%xI32u",&pos);
 			int len = 4 ;
 			while ( n-- ) {
-				printf("%x",swaddr_read(pos,len));
+				printf("%x\n",swaddr_read(pos,len));
 				pos += len ;
 			}
 			return 1 ;
