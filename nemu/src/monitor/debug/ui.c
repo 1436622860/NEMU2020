@@ -105,7 +105,7 @@ static int cmd_info(char *args) {
 		sscanf(args,"%c",&sub);
 		if ( sub == 'r')
 		{
-			printf("eax:%x\nedx:%x\necx%x\nebx%x\nebp%x\nesi%x\nedi%x\nesp%x\n",cpu.eax,cpu.edx,cpu.ecx,cpu.ebx,cpu.ebp,cpu.esi,cpu.edi,cpu.esp);
+			printf("eax:%x\nedx:%x\necx:%x\nebx:%x\nebp:%x\nesi:%x\nedi:%x\nesp:%x\n",cpu.eax,cpu.edx,cpu.ecx,cpu.ebx,cpu.ebp,cpu.esi,cpu.edi,cpu.esp);
 			return 1;
 		}
 	}
