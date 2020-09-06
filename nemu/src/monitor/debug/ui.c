@@ -127,7 +127,7 @@ static int cmd_x(char *args) {
 		if ( arg2 + strlen(arg2) == args_end ) {
 			uint32_t pos ;
 			sscanf(arg2,"%xI32u",&pos);
-			int len = 32 ;
+			int len = 4 ;
 			while ( n-- ) {
 				printf("%x",swaddr_read(pos,len));
 				pos += len ;
