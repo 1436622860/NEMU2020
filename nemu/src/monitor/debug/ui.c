@@ -38,6 +38,8 @@ static int cmd_q(char *args) {
 
 static int cmd_help(char *args);
 
+static int cmd_si(char *args);
+
 static struct {
 	char *name;
 	char *description;
@@ -46,11 +48,8 @@ static struct {
 	{ "help", "Display informations about all supported commands", cmd_help },
 	{ "c", "Continue the execution of the program", cmd_c },
 	{ "q", "Exit NEMU", cmd_q },
-
-	/* TODO: Add more commands */
-
+	{ "si","Execute single instructions" , cmd_si },
 };
-
 #define NR_CMD (sizeof(cmd_table) / sizeof(cmd_table[0]))
 
 static int cmd_help(char *args) {
@@ -75,6 +74,26 @@ static int cmd_help(char *args) {
 	}
 	return 0;
 }
+
+static int cmd_si(char *args) {
+	if ( args != NULL )
+	{
+		char *args_end = args + strlen(args);
+		char *cmd = strtok(args," ");
+		char *num = cmd + strlen(cmd) + 1 ;
+		if ( num >= args_end )
+		{
+			uint32_t n ;
+			sscanf(cmd,"%I32u",&n);
+			cpu_exec(n);
+			return 1 ;
+		}
+		printf("Too much arguments, si [N]");
+		return 0 ;
+	}
+	cpu_exec(1);
+	return 1 ;
+}	
 
 void ui_mainloop() {
 	while(1) {
