@@ -88,7 +88,7 @@ static int cmd_si(char *args) {
 			cpu_exec(n);
 			return 1 ;
 		}
-		printf("Too much arguments, si [N]");
+		printf("Too much arguments, si [N]\n");
 		return 0 ;
 	}
 	cpu_exec(1);
